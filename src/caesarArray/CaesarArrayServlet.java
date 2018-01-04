@@ -1,6 +1,8 @@
 package caesarArray;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import base.BaseServlet;
 import base.Operation;
+import base.Util;
 
 /**
  * カエサル暗号（配列）Servletクラス
@@ -34,15 +37,20 @@ public class CaesarArrayServlet extends BaseServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		// 文字化け対策
+		response.setContentType("text/html; charset=UTF-8");
+		request.setCharacterEncoding("UTF-8");
+
+		// パラメータ取得
 		CaesarArrayParams params = getParameter(request);
-		String message = null;
+		String message = "";
 
 		switch(params.getOperation()) {
 		case doEncryption:
 			// 暗号化
 
 			// 入力チェック
-			if (!validate(params)) {
+			if (validate(params)) {
 
 				// 暗号化処理
 				message = doEncryption(params.getShift(), params.getTarget());
@@ -52,7 +60,7 @@ public class CaesarArrayServlet extends BaseServlet {
 			// 復号化
 
 			//入力チェック
-			if (!validate(params)) {
+			if (validate(params)) {
 				// 復号化処理
 				message = doDecryption(params.getShift(), params.getTarget());
 			}
@@ -108,11 +116,45 @@ public class CaesarArrayServlet extends BaseServlet {
 	 * @return 暗号化したメッセージ
 	 */
 	protected String doEncryption(String shift, String target) {
-		String message = "doEncryption";
 
-		//　ここに暗号化処理を書く
+		// アルファベット初期化
+		ArrayList<String> alphaList = new ArrayList<String>(
+			Arrays.asList(
+				"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+				"n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
+			)
+		);
 
-		return message;
+		// シフト数取得
+		int scnt = Integer.parseInt(shift);
+
+		// 入力文を1文字ずつ分割
+		String[] targetArray = target.split("");
+		StringBuilder sb = new StringBuilder();
+		for (String ch: targetArray) {
+
+			// アルファベットから検索
+			int fpos = 0;
+			do {
+				if (alphaList.get(fpos).equals(ch)) {
+					// 見つかった
+					break;
+				}
+			} while ( ++fpos < alphaList.size());
+
+			// 暗号文に変換
+			if (fpos == alphaList.size()) {
+				// 見つからなかった文字は変換しない
+				sb.append(ch);
+			} else {
+				// 暗号文に変換するため、シフト後の位置を算出
+				int tpos = (fpos + scnt) % alphaList.size();
+				// 暗号文用のアルファベットを取得し、大文字に変換
+				sb.append(alphaList.get(tpos).toUpperCase());
+			}
+		}
+
+		return sb.toString();
 	}
 
 	/**
@@ -122,11 +164,44 @@ public class CaesarArrayServlet extends BaseServlet {
 	 * @return 復号化したメッセージ
 	 */
 	protected String doDecryption(String shift, String target) {
-		String message = "doDecryption";
 
-		//　ここに復号化処理を書く
+		// アルファベット初期化
+		ArrayList<String> alphaList = new ArrayList<String>(
+			Arrays.asList(
+				"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+				"n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
+			)
+		);
 
-		return message;
+		// シフト数取得
+		int scnt = Integer.parseInt(shift);
+
+		// 入力文を1文字ずつ分割
+		String[] targetArray = target.split("");
+		StringBuilder sb = new StringBuilder();
+		for (String ch: targetArray) {
+			// アルファベットから検索
+			int fpos = 0;
+			do {
+				if (alphaList.get(fpos).equals(ch)) {
+					// 見つかった
+					break;
+				}
+			} while ( ++fpos < alphaList.size());
+
+			// 平文に変換
+			if (fpos == alphaList.size()) {
+				// 見つからなかった文字は変換しない
+				sb.append(ch);
+			} else {
+				// 平文に変換するため、シフト後の位置を算出
+				int tpos = (fpos + alphaList.size() - scnt) % alphaList.size();
+				// 平文用のアルファベットを取得
+				sb.append(alphaList.get(tpos).toUpperCase());
+			}
+		}
+
+		return sb.toString();
 	}
 
 	/**
@@ -151,9 +226,27 @@ public class CaesarArrayServlet extends BaseServlet {
 	 */
 	protected boolean validate(CaesarArrayParams params) {
 
-		params.addErrorMessage("エラーだよ");
-		params.addErrorMessage("エラーだよ２");
+		boolean rtn = true;
 
-		return false;
+		// 入力文未入力チェック
+		if (params.getTarget().length() == 0) {
+			params.addErrorMessage("[入力]文を入力してください。");
+			rtn = false;
+		} else {
+			// 入力文半角チェック
+			if (!Util.isHalfWidth(params.getTarget())) {
+				params.addErrorMessage("[入力]文は半角英小文字数字で入力してください。");
+				rtn = false;
+			}
+		}
+
+		// シフト数値チェック（1～26以外ならエラー）
+		int shift = Util.str2int(params.getShift());
+		if (1 > shift || shift > 25) {
+			params.addErrorMessage("[シフト数]は1～25の範囲で入力してください。");
+			rtn = false;
+		}
+
+		return rtn;
 	}
 }
