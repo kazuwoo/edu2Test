@@ -15,15 +15,15 @@ import org.apache.commons.lang3.StringUtils;
  * すべてのServletの基底クラス
  * Servlet implementation class baseServlet
  */
-@WebServlet("/baseServlet")
-public class baseServlet extends HttpServlet {
+@WebServlet("/BaseServlet")
+public class BaseServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * コンストラクタ
      * @see HttpServlet#HttpServlet()
      */
-    public baseServlet() {
+    public BaseServlet() {
         super();
     }
 
@@ -48,8 +48,8 @@ public class baseServlet extends HttpServlet {
 	 * @request リクエストパラメータ
 	 * @return パラメータ
 	 */
-	protected Params getParameter(HttpServletRequest request) {
-		Params params = new Params();
+	protected BaseParams getParameter(HttpServletRequest request) {
+		BaseParams params = new BaseParams();
 
 		// 操作取得
 		String operationBuf	= StringUtils.defaultString(request.getParameter("operation"));

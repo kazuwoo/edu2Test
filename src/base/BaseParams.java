@@ -3,7 +3,7 @@ package base;
 /**
  * パラメータ
  */
-public class Params {
+public class BaseParams {
 	/**
 	 * タイトル
 	 */

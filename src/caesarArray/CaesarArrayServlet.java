@@ -8,21 +8,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import base.Params;
-import base.baseServlet;
+import base.BaseParams;
+import base.BaseServlet;
 
 /**
  * カエサル暗号（配列）Servletクラス
  * Servlet implementation class caesarArrayServlet
  */
-@WebServlet("/caesarArray")
-public class caesarArrayServlet extends baseServlet {
+@WebServlet("/CaesarArray")
+public class CaesarArrayServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
-     * @see baseServlet#baseServlet()
+     * @see BaseServlet#baseServlet()
      */
-    public caesarArrayServlet() {
+    public CaesarArrayServlet() {
         super();
     }
 
@@ -32,7 +32,7 @@ public class caesarArrayServlet extends baseServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		Params params = getParameter(request);
+		BaseParams params = getParameter(request);
 		String message = null;
 
 		switch(params.getOperation()) {

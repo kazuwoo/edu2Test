@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="base.Util" %>
 <%@ page import="base.Operation" %>
-<jsp:useBean id="params" class="base.Params" scope="request" />
+<jsp:useBean id="params" class="base.BaseParams" scope="request" />
 
 <html>
 	<head>
@@ -46,7 +46,7 @@
 
 				<article>
 
-					<form role="form" name="doRegistrationForm" method="POST" action="caesarArray">
+					<form role="form" name="doRegistrationForm" method="POST" action="CaesarArray">
 						<section class="inputBox">
 
 							<div class="row">
