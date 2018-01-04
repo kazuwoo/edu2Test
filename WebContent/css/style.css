@@ -1,0 +1,71 @@
+
+/*
+ 共通エリア
+*/
+
+body {
+
+}
+
+header {
+	margin: 60px 0 30px;
+}
+
+article:after {
+    display: block;
+    clear: both;
+    height: 0px;
+    visibility: hidden;
+    content: " ";
+}
+
+footer {
+	margin: 50px 0 0;
+	padding: 20px;
+	border-top: 1px solid #d9d9d9;
+	clear: both;
+}
+
+h1 {
+	text-align: center;
+	padding: 20px;
+	border-bottom: 1px solid #d9d9d9;
+}
+
+.message-area .message {
+	padding: 10px;
+	margin-bottom: 20px;
+	border-radius: 5px;
+	text-align: left;
+}
+
+.argicle {
+	widht: 700px;
+}
+
+.form-group {
+	/*margin-bottom: 30px;*/
+}
+
+.button-group {
+	padding: 15px 0;
+}
+
+.navbar ul {
+	margin-right: 10%;
+
+}
+
+.glyphicon {
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.row {
+	margin-bottom: 20px;
+}
+
+.inputBox {
+	border-bottom :1px solid #d9d9d9;
+	margin-bottom: 30px;
+}
