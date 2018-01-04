@@ -13,18 +13,38 @@ public class BaseParams {
 	 */
 	protected Operation operation;
 
+	/**
+	 * タイトル取得
+	 * @return タイトル
+	 */
 	public String getTitle() {
 		return title;
 	}
+
+	/**
+	 * タイトル設定
+	 * @param title タイトル
+	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
+	/**
+	 * 操作取得
+	 * @return 操作
+	 */
 	public Operation getOperation() {
 		return operation;
 	}
+
+	/**
+	 * 操作設定
+	 * @param action 操作
+	 */
 	public void setOperation(Operation action) {
 		this.operation = action;
 	}
+
 	/**
 	 * 操作判定（暗号化）
 	 * @return 操作が復号化、暗号解読以外ならtrue
