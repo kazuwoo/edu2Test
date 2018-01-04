@@ -1,7 +1,7 @@
 package base;
 
 /**
- * パラメータ
+ * パラメータの基底クラス
  */
 public class BaseParams {
 	/**
@@ -12,22 +12,6 @@ public class BaseParams {
 	 * 操作
 	 */
 	protected Operation operation;
-	/**
-	 * シフト数
-	 */
-	protected String shift;
-	/**
-	 * キーワード
-	 */
-	protected String keyword;
-	/**
-	 * 入力文
-	 */
-	protected String target;
-	/**
-	 * 出力文
-	 */
-	protected String message;
 
 	public String getTitle() {
 		return title;
@@ -40,30 +24,6 @@ public class BaseParams {
 	}
 	public void setOperation(Operation action) {
 		this.operation = action;
-	}
-	public String getShift() {
-		return shift;
-	}
-	public void setShift(String shift) {
-		this.shift = shift;
-	}
-	public String getKeyword() {
-		return keyword;
-	}
-	public void setKeyword(String keyword) {
-		this.keyword = keyword;
-	}
-	public String getTarget() {
-		return target;
-	}
-	public void setTarget(String target) {
-		this.target = target;
-	}
-	public String getMessage() {
-		return message;
-	}
-	public void setMessage(String message) {
-		this.message = message;
 	}
 	/**
 	 * 操作判定（暗号化）

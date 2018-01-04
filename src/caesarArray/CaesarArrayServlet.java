@@ -8,8 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import base.BaseParams;
+import org.apache.commons.lang3.StringUtils;
+
 import base.BaseServlet;
+import base.Operation;
 
 /**
  * カエサル暗号（配列）Servletクラス
@@ -32,7 +34,7 @@ public class CaesarArrayServlet extends BaseServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		BaseParams params = getParameter(request);
+		CaesarArrayParams params = getParameter(request);
 		String message = null;
 
 		switch(params.getOperation()) {
@@ -61,6 +63,31 @@ public class CaesarArrayServlet extends BaseServlet {
 
 		// 画面に結果を返す
 		getServletConfig().getServletContext().getRequestDispatcher("/jsp/caesarArray.jsp").forward(request, response);
+	}
+
+	/**
+	 * パラメータ取得
+	 * @request リクエストパラメータ
+	 * @return パラメータ
+	 */
+	protected CaesarArrayParams getParameter(HttpServletRequest request) {
+		CaesarArrayParams params = new CaesarArrayParams();
+
+		// 操作取得
+		String operationBuf	= StringUtils.defaultString(request.getParameter("operation"));
+		Operation operation	= Operation.defaultValueOf(operationBuf);
+
+		// シフト数取得
+		String shift	= StringUtils.defaultString(request.getParameter("shift"));
+
+		// 入力文取得
+		String target	= StringUtils.defaultString(request.getParameter("target"));
+
+		params.setOperation(operation);
+		params.setShift(shift);
+		params.setTarget(target);
+
+		return params;
 	}
 
 	/**
@@ -104,5 +131,4 @@ public class CaesarArrayServlet extends BaseServlet {
 
 		return message;
 	}
-
 }

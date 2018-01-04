@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="base.Util" %>
 <%@ page import="base.Operation" %>
-<jsp:useBean id="params" class="base.BaseParams" scope="request" />
+<jsp:useBean id="params" class="caesarArray.CaesarArrayParams" scope="request" />
 
 <html>
 	<head>
@@ -92,7 +92,7 @@
 									<div class="col-sm-1 input-label">
 										<label for="shift">シフト数</label>
 									</div>
-									<div class="col-sm-10">
+									<div class="col-sm-1">
 										<input type="text" class="form-control" id="shift" name="shift"
 											value="<jsp:getProperty name="params" property="shift" />">
 									</div>

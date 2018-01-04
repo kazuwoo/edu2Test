@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
-
 
 /**
  * すべてのServletの基底クラス
@@ -41,35 +39,6 @@ public class BaseServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-	}
-
-	/**
-	 * パラメータ取得
-	 * @request リクエストパラメータ
-	 * @return パラメータ
-	 */
-	protected BaseParams getParameter(HttpServletRequest request) {
-		BaseParams params = new BaseParams();
-
-		// 操作取得
-		String operationBuf	= StringUtils.defaultString(request.getParameter("operation"));
-		Operation operation	= Operation.defaultValueOf(operationBuf);
-
-		// シフト数取得
-		String shift	= StringUtils.defaultString(request.getParameter("shift"));
-
-		// キーワード取得
-		String keyword	= StringUtils.defaultString(request.getParameter("keyword"));
-
-		// 入力文取得
-		String target	= StringUtils.defaultString(request.getParameter("target"));
-
-		params.setOperation(operation);
-		params.setShift(shift);
-		params.setKeyword(keyword);
-		params.setTarget(target);
-
-		return params;
 	}
 
 }
