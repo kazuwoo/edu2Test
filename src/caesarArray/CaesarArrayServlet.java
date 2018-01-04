@@ -39,12 +39,23 @@ public class CaesarArrayServlet extends BaseServlet {
 
 		switch(params.getOperation()) {
 		case doEncryption:
-			// 暗号化処理
-			message = doEncryption(params.getShift(), params.getTarget());
+			// 暗号化
+
+			// 入力チェック
+			if (!validate(params)) {
+
+				// 暗号化処理
+				message = doEncryption(params.getShift(), params.getTarget());
+			}
 			break;
 		case doDecryption:
-			// 復号化処理
-			message = doDecryption(params.getShift(), params.getTarget());
+			// 復号化
+
+			//入力チェック
+			if (!validate(params)) {
+				// 復号化処理
+				message = doDecryption(params.getShift(), params.getTarget());
+			}
 			break;
 		case doCryptanalysis:
 			// 暗号解読処理
@@ -130,5 +141,19 @@ public class CaesarArrayServlet extends BaseServlet {
 		//　ここに暗号解読処理を書く
 
 		return message;
+	}
+
+	/**
+	 * 入力チェック
+	 * @param shift シフト数
+	 * @param target 入力文
+	 * @return true エラーなし
+	 */
+	protected boolean validate(CaesarArrayParams params) {
+
+		params.addErrorMessage("エラーだよ");
+		params.addErrorMessage("エラーだよ２");
+
+		return false;
 	}
 }

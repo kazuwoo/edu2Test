@@ -17,6 +17,27 @@ import javax.servlet.http.HttpServletResponse;
 public class BaseServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * パラメータ
+	 */
+	protected BaseParams params;
+
+	/**
+	 * パラメータ取得
+	 * @return パラメータ
+	 */
+	protected BaseParams getParams() {
+		return params;
+	}
+
+	/**
+	 * パラメータ設定
+	 * @param params パラメータ
+	 */
+	protected void setParams(BaseParams params) {
+		this.params = params;
+	}
+
     /**
      * コンストラクタ
      * @see HttpServlet#HttpServlet()

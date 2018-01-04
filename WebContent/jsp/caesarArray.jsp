@@ -46,6 +46,18 @@
 
 				<article>
 
+					<section class="message-area">
+						<% if (params.hasError()) { %>
+						<div class="row">
+							<div class="col-sm-offset-1 col-sm-11">
+								<div class="message bg-danger">
+									<jsp:getProperty name="params" property="errorMessage" />
+								</div>
+							</div>
+						</div>
+						<% } %>
+					</section>
+
 					<form role="form" name="doRegistrationForm" method="POST" action="CaesarArray">
 						<section class="inputBox">
 
