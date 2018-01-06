@@ -46,7 +46,7 @@ public class Util {
 	}
 
 	/**
-	 * 半角英小文字数字記号チェック<br>
+	 * 半角英数字記号チェック<br>
 	 * 許される文字：abcdefghijklmnopqrstuvwxyz0123456789半角空白!"#$%&'()*+-.,/:;<=>?@[\]^_`{|}~改行
 	 * @param str チェック対象の文字列
 	 * @return すべて半角英数字記号ならtrue
@@ -54,5 +54,35 @@ public class Util {
 	public static boolean isHalfWidth(String str) {
 		String target = StringUtils.defaultString(str);
 		return target.matches("[a-zA-Z0-9 -/:-@\\[-\\`\\{-\\~\r\n]+");
+	}
+
+	/**
+	 * 大文字チェック
+	 * @param str チェック対象の文字列
+	 * @return 文字列中に英大文字を含んでいればtrue
+	 */
+	public static boolean isIncludeUpperCase(String str) {
+		String target = StringUtils.defaultString(str);
+		return target.matches(".*[A-Z].*");
+	}
+
+	/**
+	 * 小文字チェック
+	 * @param str チェック対象の文字列
+	 * @return 文字列中に英小文字を含んでいればtrue
+	 */
+	public static boolean isIncludeLowerCase(String str) {
+		String target = StringUtils.defaultString(str);
+		return target.matches(".*[a-z].*");
+	}
+
+	/**
+	 * 単語分割。文章を単語の区切りで分割する。
+	 * @param str 分割対象の文字列
+	 * @return 単語に分割された文字列の配列
+	 */
+	public static String[] wordSplit(String str) {
+		String target = StringUtils.defaultString(str);
+		return target.split("[ -/:-@\\[-\\`\\{-\\~\r\n]+");
 	}
 }

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 
 import base.BaseServlet;
+import base.Const;
 import base.Operation;
 import base.Util;
 
@@ -45,34 +46,28 @@ public class CaesarArrayServlet extends BaseServlet {
 		CaesarArrayParams params = getParameter(request);
 		String message = "";
 
-		switch(params.getOperation()) {
-		case doEncryption:
-			// 暗号化
+		// 入力チェック
+		if (validate(params)) {
 
-			// 入力チェック
-			if (validate(params)) {
-
-				// 暗号化処理
+			switch(params.getOperation()) {
+			case doEncryption:
+				// 暗号化
 				message = doEncryption(params.getShift(), params.getTarget());
-			}
-			break;
-		case doDecryption:
-			// 復号化
-
-			//入力チェック
-			if (validate(params)) {
-				// 復号化処理
+				break;
+			case doDecryption:
+				// 復号化
 				message = doDecryption(params.getShift(), params.getTarget());
+				break;
+			case doCryptanalysis:
+				// 暗号解読処理
+				message = doCryptanalysis(params.getTarget());
+				break;
+			default:
+				// 初期表示
+				message = "";
+				break;
 			}
-			break;
-		case doCryptanalysis:
-			// 暗号解読処理
-			message = doCryptanalysis(params.getTarget());
-			break;
-		default:
-			// 初期表示
-			message = "";
-			break;
+
 		}
 
 		// 結果を設定
@@ -168,8 +163,8 @@ public class CaesarArrayServlet extends BaseServlet {
 		// アルファベット初期化
 		ArrayList<String> alphaList = new ArrayList<String>(
 			Arrays.asList(
-				"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
-				"n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
+				"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+				"N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
 			)
 		);
 
@@ -197,7 +192,7 @@ public class CaesarArrayServlet extends BaseServlet {
 				// 平文に変換するため、シフト後の位置を算出
 				int tpos = (fpos + alphaList.size() - scnt) % alphaList.size();
 				// 平文用のアルファベットを取得
-				sb.append(alphaList.get(tpos).toUpperCase());
+				sb.append(alphaList.get(tpos).toLowerCase());
 			}
 		}
 
@@ -211,11 +206,67 @@ public class CaesarArrayServlet extends BaseServlet {
 	 * @return 解読したメッセージ
 	 */
 	protected String doCryptanalysis(String target) {
-		String message = "doCryptanalysis";
 
-		//　ここに暗号解読処理を書く
+		int matchCountMax = 0;		// 解読に成功した単語の最大数
+		String candidacy = null;	// 解読に成功したと思われる文章の候補
 
-		return message;
+		// シフト数を1ずつ変えて復号化してみる
+		for (int shift = 1; shift < 26; shift++) {
+
+			// いったん復号化
+			String sentence = doDecryption(Integer.toString(shift), target);
+			// 復号化した文章を単語で分割
+			String[] words = Util.wordSplit(sentence);
+
+			int matchCount = 0;	// 既知の単語と一致した数
+			int checkCount = 0;	// 1文字単語、2文字単語の数
+
+			// 1文字単語、2文字単語の内、既知の単語と一致した数を数える
+			for (int pos = 0; pos < words.length; pos++) {
+				// 1文字単語か？
+				if (words[pos].length() == 1) {
+					// 1文字単語
+					checkCount++;
+					// 既知の単語と一致するか
+					for (String o: Const.oneCharList) {
+						if (o.equals(words[pos])) {
+							// 既知の単語と一致したので、解読成功と思われる
+							matchCount++;
+						}
+					}
+				}
+
+				// 2文字単語か？
+				if (words[pos].length() == 2) {
+					// 2文字単語
+					checkCount++;
+					// 既知の単語と一致するか
+					for (String t: Const.twoCharList) {
+						if (t.equals(words[pos])) {
+							// 2文字単語
+							matchCount++;
+						}
+					}
+				}
+			}
+
+			// 過去の1文字単語、2文字単語の数と比較し最大となる復号結果を正解とみなす
+			if (matchCount > matchCountMax) {
+				matchCountMax = matchCount;
+				candidacy = sentence;
+			}
+
+			// すべての1文字単語、2文字単語の解読に成功したら、解読終了
+			if (checkCount == matchCountMax) {
+				break;
+			}
+		}
+
+		if (candidacy == null) {
+			// 解読失敗
+			candidacy = "解読できませんでした。";
+		}
+		return candidacy;
 	}
 
 	/**
@@ -228,23 +279,57 @@ public class CaesarArrayServlet extends BaseServlet {
 
 		boolean rtn = true;
 
-		// 入力文未入力チェック
-		if (params.getTarget().length() == 0) {
-			params.addErrorMessage("[入力]文を入力してください。");
-			rtn = false;
-		} else {
-			// 入力文半角チェック
-			if (!Util.isHalfWidth(params.getTarget())) {
-				params.addErrorMessage("[入力]文は半角英小文字数字で入力してください。");
-				rtn = false;
-			}
-		}
+		switch(params.getOperation()) {
+		case doEncryption:
+		case doDecryption:
+		case doCryptanalysis:
 
-		// シフト数値チェック（1～26以外ならエラー）
-		int shift = Util.str2int(params.getShift());
-		if (1 > shift || shift > 25) {
-			params.addErrorMessage("[シフト数]は1～25の範囲で入力してください。");
-			rtn = false;
+			// 入力文未入力チェック
+			if (params.getTarget().length() == 0) {
+				params.addErrorMessage("[入力]文を入力してください。");
+				rtn = false;
+			} else {
+				// 入力文半角チェック
+				if (!Util.isHalfWidth(params.getTarget())) {
+					params.addErrorMessage("[入力]文は半角英数字記号で入力してください。");
+					rtn = false;
+				}
+
+				if (params.getOperation().equals(Operation.doEncryption)) {
+
+					// 暗号化時は小文字のみ入力可
+					if (Util.isIncludeUpperCase(params.getTarget())) {
+						params.addErrorMessage("暗号化時、[入力]文は小文字で入力してください。");
+						rtn = false;
+					}
+				} else {
+
+					// 復号化、暗号解読時は大文字のみ入力可
+					if (Util.isIncludeLowerCase(params.getTarget())) {
+						params.addErrorMessage("復号化、暗号解読時、[入力]文は大文字で入力してください。");
+						rtn = false;
+					}
+				}
+			}
+
+			if (params.getOperation().equals(Operation.doEncryption)
+				||params.getOperation().equals(Operation.doDecryption)) {
+
+				// 暗号化、復号化時のみシフト数値チェック（1～26以外ならエラー）
+				int shift = Util.str2int(params.getShift());
+				if (1 > shift || shift > 25) {
+					params.addErrorMessage("[シフト数]は1～25の範囲で入力してください。");
+					rtn = false;
+				}
+			}
+
+			break;
+
+		default:
+
+			// 初期表示時は何もしない
+			break;
+
 		}
 
 		return rtn;

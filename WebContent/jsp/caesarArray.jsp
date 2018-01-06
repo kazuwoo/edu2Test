@@ -32,13 +32,7 @@
 		<div>
 			<div class="main">
 
-				<nav class="navbar navbar-default navbar-fixed-top">
-					<div id="navbar" class="navbar-collapse collapse">
-						<ul class="nav navbar-nav navbar-right">
-							<li><a href="#" onclick="javascript:document.forms['showMainMenuForm'].submit();">メインメニュー</a></li>
-						</ul>
-					</div>
-				</nav>
+				<jsp:include page="menu.jsp" />
 
 				<header>
 					<h1><jsp:getProperty name="params" property="title" /></h1>
@@ -104,7 +98,7 @@
 									<div class="col-sm-1 input-label">
 										<label for="shift">シフト数</label>
 									</div>
-									<div class="col-sm-1">
+									<div class="col-sm-2">
 										<input type="text" class="form-control" id="shift" name="shift"
 											value="<jsp:getProperty name="params" property="shift" />">
 									</div>
@@ -133,7 +127,7 @@
 
 				<footer>
 					<div class="copyright">
-						Copyright 2018 ARKSYSTEM.
+						Copyright 2018 Kazuo Suzuki.
 					</div>
 				</footer>
 			</div><!-- end of main -->

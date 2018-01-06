@@ -9,7 +9,7 @@ public enum Operation {
 	doEncryption
 	/** 復号化 */
 	,doDecryption
-	/** 解読 */
+	/** 暗号解読 */
 	,doCryptanalysis
 	/** 不明 */
 	,unknown
