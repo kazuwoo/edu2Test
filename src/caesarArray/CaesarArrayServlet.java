@@ -64,19 +64,17 @@ public class CaesarArrayServlet extends BaseServlet {
 				break;
 			default:
 				// 初期表示
-				message = "";
 				break;
 			}
 
 		}
 
 		// 結果を設定
-		params.setTitle("カエサル暗号（配列）");
 		params.setMessage(message);
 		request.setAttribute("params", params);
 
 		// 画面に結果を返す
-		getServletConfig().getServletContext().getRequestDispatcher("/jsp/caesarArray.jsp").forward(request, response);
+		request.getRequestDispatcher("/jsp/caesarArray.jsp").forward(request, response);
 	}
 
 	/**
@@ -97,9 +95,13 @@ public class CaesarArrayServlet extends BaseServlet {
 		// 入力文取得
 		String target	= StringUtils.defaultString(request.getParameter("target"));
 
+		params.setTitle("カエサル暗号（配列）");
+		params.setErrorMessage("");
 		params.setOperation(operation);
 		params.setShift(shift);
 		params.setTarget(target);
+		params.setMessage("");
+
 
 		return params;
 	}
@@ -315,11 +317,25 @@ public class CaesarArrayServlet extends BaseServlet {
 			if (params.getOperation().equals(Operation.doEncryption)
 				||params.getOperation().equals(Operation.doDecryption)) {
 
-				// 暗号化、復号化時のみシフト数値チェック（1～26以外ならエラー）
-				int shift = Util.str2int(params.getShift());
-				if (1 > shift || shift > 25) {
-					params.addErrorMessage("[シフト数]は1～25の範囲で入力してください。");
+				// シフト数未入力チェック
+				if (params.getShift().length() == 0) {
+					params.addErrorMessage("[シフト数]を入力してください。");
 					rtn = false;
+				} else{
+
+					// シフト数半角チェック
+					if (!Util.isNumber(params.getShift())) {
+						params.addErrorMessage("[シフト数]は半角数字で入力してください。");
+						rtn = false;
+					} else {
+
+						// シフト数値チェック（1～26以外ならエラー）
+						int shift = Util.str2int(params.getShift());
+						if (1 > shift || shift > 25) {
+							params.addErrorMessage("[シフト数]は1～25の範囲で入力してください。");
+							rtn = false;
+						}
+					}
 				}
 			}
 

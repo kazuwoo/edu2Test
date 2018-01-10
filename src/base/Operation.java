@@ -26,6 +26,8 @@ public enum Operation {
 			action = Operation.valueOf(value);
 		} catch (IllegalArgumentException e) {
 			action = unknown;
+		} catch (Exception e) {
+			action = unknown;
 		}
 		return action;
 	}

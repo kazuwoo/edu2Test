@@ -22,22 +22,6 @@ public class BaseServlet extends HttpServlet {
 	 */
 	protected BaseParams params;
 
-	/**
-	 * パラメータ取得
-	 * @return パラメータ
-	 */
-	protected BaseParams getParams() {
-		return params;
-	}
-
-	/**
-	 * パラメータ設定
-	 * @param params パラメータ
-	 */
-	protected void setParams(BaseParams params) {
-		this.params = params;
-	}
-
     /**
      * コンストラクタ
      * @see HttpServlet#HttpServlet()
@@ -55,7 +39,7 @@ public class BaseServlet extends HttpServlet {
 	}
 
 	/**
-	 * 本処理
+	 * 本処理。本クラスでは何もしない。
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

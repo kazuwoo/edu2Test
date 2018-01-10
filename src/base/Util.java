@@ -14,6 +14,13 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class Util {
 
+	/**
+	 * デフォルトコンストラクタ
+	 */
+	protected Util() {
+
+	}
+
 	/** 最終更新日時取得用書式定義 */
 	private static SimpleDateFormat timestampFormat = new SimpleDateFormat("yyyyMMddhhmmss");
 
@@ -63,7 +70,7 @@ public class Util {
 	 */
 	public static boolean isIncludeUpperCase(String str) {
 		String target = StringUtils.defaultString(str);
-		return target.matches(".*[A-Z].*");
+		return target.replaceAll("\r\n", "").matches(".*[A-Z].*");
 	}
 
 	/**
@@ -73,7 +80,18 @@ public class Util {
 	 */
 	public static boolean isIncludeLowerCase(String str) {
 		String target = StringUtils.defaultString(str);
-		return target.matches(".*[a-z].*");
+		return target.replaceAll("\r\n", "").matches(".*[a-z].*");
+	}
+
+	/**
+	 * 数字チェック
+	 * @param str
+	 * @param str チェック対象の文字列
+	 * @return すべて数字ならtrue
+	 */
+	public static boolean isNumber(String str) {
+		String target = StringUtils.defaultString(str);
+		return target.matches("[0-9]+");
 	}
 
 	/**

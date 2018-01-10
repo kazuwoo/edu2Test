@@ -6,23 +6,32 @@ import java.util.Arrays;
 /**
  * 定数クラス
  */
-public class Const {
+public final class Const {
+
+	/**
+	 * デフォルトコンストラクタ
+	 */
+	protected Const() {
+
+	}
+
 	/**
 	 * 1文字の英単語
 	 */
 	public static final ArrayList<String> oneCharList = new ArrayList<String>(
-		Arrays.asList("A", "I")
+		Arrays.asList("a", "i")
 	);
+
 	/**
 	 * 2文字の英単語
 	 */
 	public static final ArrayList<String> twoCharList = new ArrayList<String>(
 		Arrays.asList(
-			"AM", "AN", "AS", "AT", "BE", "BY", "DO",
-			"EX", "GO", "HE", "HI", "ID", "IF", "IN",
-			"IS", "IT", "ME", "MY", "NO", "OF", "OH",
-			"OK", "ON", "OP", "OR", "OS", "OW", "OX",
-			"SO", "TO", "UP", "US", "WE", "YO"
+			"am", "an", "as", "at", "be", "by", "do",
+			"ex", "go", "he", "hi", "id", "if", "in",
+			"is", "it", "me", "my", "no", "of", "oh",
+			"ok", "on", "op", "or", "os", "ow", "ox",
+			"so", "to", "up", "us", "we", "yo"
 		)
 	);
 }
