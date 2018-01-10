@@ -288,12 +288,12 @@ public class CaesarArrayServlet extends BaseServlet {
 
 			// 入力文未入力チェック
 			if (params.getTarget().length() == 0) {
-				params.addErrorMessage("[入力]文を入力してください。");
+				params.addErrorMessage("[入力文]を入力してください。");
 				rtn = false;
 			} else {
 				// 入力文半角チェック
 				if (!Util.isHalfWidth(params.getTarget())) {
-					params.addErrorMessage("[入力]文は半角英数字記号で入力してください。");
+					params.addErrorMessage("[入力文]は半角英数字記号で入力してください。");
 					rtn = false;
 				}
 
@@ -301,14 +301,14 @@ public class CaesarArrayServlet extends BaseServlet {
 
 					// 暗号化時は小文字のみ入力可
 					if (Util.isIncludeUpperCase(params.getTarget())) {
-						params.addErrorMessage("暗号化時、[入力]文は小文字で入力してください。");
+						params.addErrorMessage("暗号化時、[入力文]は小文字で入力してください。");
 						rtn = false;
 					}
 				} else {
 
 					// 復号化、暗号解読時は大文字のみ入力可
 					if (Util.isIncludeLowerCase(params.getTarget())) {
-						params.addErrorMessage("復号化、暗号解読時、[入力]文は大文字で入力してください。");
+						params.addErrorMessage("復号化、暗号解読時、[入力文]は大文字で入力してください。");
 						rtn = false;
 					}
 				}

@@ -58,7 +58,7 @@
 							<div class="row">
 								<div class="form-group">
 									<div class="col-sm-1 input-label">
-										<label for="target">入力</label>
+										<label for="target">入力文</label>
 									</div>
 									<div class="col-sm-11">
 										<textarea class="form-control" rows="8" id="target" name="target"><jsp:getProperty name="params" property="target" /></textarea>

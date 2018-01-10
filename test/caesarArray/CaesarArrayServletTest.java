@@ -76,7 +76,7 @@ public class CaesarArrayServletTest {
 			when(request.getParameter("shift")).thenReturn(null);
 			servlet.doPost(request, response);
 			assertEquals("暗号化時入力エラーのテスト(タイトル)", "カエサル暗号（配列）", params.getTitle());
-			assertEquals("暗号化時入力エラーのテスト(エラーメッセージ)", "[入力]文を入力してください。<br>[シフト数]を入力してください。", params.getErrorMessage());
+			assertEquals("暗号化時入力エラーのテスト(エラーメッセージ)", "[入力文]を入力してください。<br>[シフト数]を入力してください。", params.getErrorMessage());
 			assertEquals("暗号化時入力エラーのテスト(シフト数)", "", params.getShift());
 			assertEquals("暗号化時入力エラーのテスト(入力)", "", params.getTarget());
 			assertEquals("暗号化時入力エラーのテスト(出力)", "", params.getMessage());
@@ -100,7 +100,7 @@ public class CaesarArrayServletTest {
 			when(request.getParameter("shift")).thenReturn(null);
 			servlet.doPost(request, response);
 			assertEquals("復号化時入力エラーのテスト(タイトル)", "カエサル暗号（配列）", params.getTitle());
-			assertEquals("復号化時入力エラーのテスト(エラーメッセージ)", "[入力]文を入力してください。<br>[シフト数]を入力してください。", params.getErrorMessage());
+			assertEquals("復号化時入力エラーのテスト(エラーメッセージ)", "[入力文]を入力してください。<br>[シフト数]を入力してください。", params.getErrorMessage());
 			assertEquals("復号化時入力エラーのテスト(シフト数)", "", params.getShift());
 			assertEquals("復号化時入力エラーのテスト(入力)", "", params.getTarget());
 			assertEquals("復号化時入力エラーのテスト(出力)", "", params.getMessage());
@@ -124,7 +124,7 @@ public class CaesarArrayServletTest {
 			when(request.getParameter("shift")).thenReturn(null);
 			servlet.doPost(request, response);
 			assertEquals("暗号解読時入力エラーのテスト(タイトル)", "カエサル暗号（配列）", params.getTitle());
-			assertEquals("暗号解読時入力エラーのテスト(エラーメッセージ)", "[入力]文を入力してください。", params.getErrorMessage());
+			assertEquals("暗号解読時入力エラーのテスト(エラーメッセージ)", "[入力文]を入力してください。", params.getErrorMessage());
 			assertEquals("暗号解読時入力エラーのテスト(シフト数)", "", params.getShift());
 			assertEquals("暗号解読時入力エラーのテスト(入力)", "", params.getTarget());
 			assertEquals("暗号解読時入力エラーのテスト(出力)", "", params.getMessage());
@@ -308,7 +308,7 @@ public void testValidate() {
 		params.setShift("1");
 		params.setErrorMessage("");
 		rtn = servlet.validate(params);
-		assertEquals("暗号化の入力文未入力チェック（異常系）", "[入力]文を入力してください。", params.getErrorMessage());
+		assertEquals("暗号化の入力文未入力チェック（異常系）", "[入力文]を入力してください。", params.getErrorMessage());
 		assertEquals("暗号化の入力文未入力チェック（異常系）", false, rtn);
 
 		// 暗号化の入力文全角チェック（異常系）
@@ -317,7 +317,7 @@ public void testValidate() {
 		params.setShift("1");
 		params.setErrorMessage("");
 		rtn = servlet.validate(params);
-		assertEquals("暗号化の入力文未入力チェック（異常系）", "[入力]文は半角英数字記号で入力してください。", params.getErrorMessage());
+		assertEquals("暗号化の入力文未入力チェック（異常系）", "[入力文]は半角英数字記号で入力してください。", params.getErrorMessage());
 		assertEquals("暗号化の入力文未入力チェック（異常系）", false, rtn);
 
 		// 暗号化の入力文小文字チェック（異常系）
@@ -326,7 +326,7 @@ public void testValidate() {
 		params.setShift("1");
 		params.setErrorMessage("");
 		rtn = servlet.validate(params);
-		assertEquals("暗号化の入力文小文字チェック（異常系）", "暗号化時、[入力]文は小文字で入力してください。", params.getErrorMessage());
+		assertEquals("暗号化の入力文小文字チェック（異常系）", "暗号化時、[入力文]は小文字で入力してください。", params.getErrorMessage());
 		assertEquals("暗号化の入力文小文字チェック（異常系）", false, rtn);
 
 		// 暗号化のシフト数最小値-1チェック（異常系）
@@ -418,7 +418,7 @@ public void testValidate() {
 		params.setShift("1");
 		params.setErrorMessage("");
 		rtn = servlet.validate(params);
-		assertEquals("復号化の入力文未入力チェック（異常系）", "[入力]文を入力してください。", params.getErrorMessage());
+		assertEquals("復号化の入力文未入力チェック（異常系）", "[入力文]を入力してください。", params.getErrorMessage());
 		assertEquals("復号化の入力文未入力チェック（異常系）", false, rtn);
 
 		// 復号化の入力文全角チェック（異常系）
@@ -427,7 +427,7 @@ public void testValidate() {
 		params.setShift("1");
 		params.setErrorMessage("");
 		rtn = servlet.validate(params);
-		assertEquals("復号化の入力文未入力チェック（異常系）", "[入力]文は半角英数字記号で入力してください。", params.getErrorMessage());
+		assertEquals("復号化の入力文未入力チェック（異常系）", "[入力文]は半角英数字記号で入力してください。", params.getErrorMessage());
 		assertEquals("復号化の入力文未入力チェック（異常系）", false, rtn);
 
 		// 復号化の入力文大文字チェック（異常系）
@@ -436,7 +436,7 @@ public void testValidate() {
 		params.setShift("1");
 		params.setErrorMessage("");
 		rtn = servlet.validate(params);
-		assertEquals("復号化の入力文大文字チェック（異常系）", "復号化、暗号解読時、[入力]文は大文字で入力してください。", params.getErrorMessage());
+		assertEquals("復号化の入力文大文字チェック（異常系）", "復号化、暗号解読時、[入力文]は大文字で入力してください。", params.getErrorMessage());
 		assertEquals("復号化の入力文大文字チェック（異常系）", false, rtn);
 
 		// 復号化のシフト数最小値-1チェック（異常系）
@@ -528,7 +528,7 @@ public void testValidate() {
 		params.setShift("1");
 		params.setErrorMessage("");
 		rtn = servlet.validate(params);
-		assertEquals("暗号解読の入力文未入力チェック（異常系）", "[入力]文を入力してください。", params.getErrorMessage());
+		assertEquals("暗号解読の入力文未入力チェック（異常系）", "[入力文]を入力してください。", params.getErrorMessage());
 		assertEquals("暗号解読の入力文未入力チェック（異常系）", false, rtn);
 
 		// 暗号解読の入力文全角チェック（異常系）
@@ -537,7 +537,7 @@ public void testValidate() {
 		params.setShift("1");
 		params.setErrorMessage("");
 		rtn = servlet.validate(params);
-		assertEquals("暗号解読の入力文未入力チェック（異常系）", "[入力]文は半角英数字記号で入力してください。", params.getErrorMessage());
+		assertEquals("暗号解読の入力文未入力チェック（異常系）", "[入力文]は半角英数字記号で入力してください。", params.getErrorMessage());
 		assertEquals("暗号解読の入力文未入力チェック（異常系）", false, rtn);
 
 		// 暗号解読の入力文小文字チェック（異常系）
@@ -546,7 +546,7 @@ public void testValidate() {
 		params.setShift("1");
 		params.setErrorMessage("");
 		rtn = servlet.validate(params);
-		assertEquals("暗号解読の入力文小文字チェック（異常系）", "復号化、暗号解読時、[入力]文は大文字で入力してください。", params.getErrorMessage());
+		assertEquals("暗号解読の入力文小文字チェック（異常系）", "復号化、暗号解読時、[入力文]は大文字で入力してください。", params.getErrorMessage());
 		assertEquals("暗号解読の入力文小文字チェック（異常系）", false, rtn);
 
 		// 暗号解読のシフト数最小値-1チェック（正常系）
